@@ -1,0 +1,10 @@
+{
+  "require": {
+    "predis/predis": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "modules"
+    }
+  }
+}
