@@ -40,16 +40,19 @@ class Application
     }
 
     /**
-     * @return string
+     * @return ResponseInterface
+     * @throws \Exception
      */
-    public function getResponse(): AbstractResponse
+    public function getResponse(): ResponseInterface
     {
         $route = $this->getRequestString();
         $router = $this->routerPool->match($route);
-//        if ($router instanceof \Phpframework\Pages\Router) {
-//            return "Page Router";
-//        }
-//        return "404";
+
+        //todo just for testing
+        $layoutHanlder = new LayoutHandler();
+        $layoutHanlder->getCombinedLayoutByName('default');
+
+        // todo swap for real response
         $response = new \Phpframework\Core\HtmlResponse('404 Not Found', 404);
         return $response;
     }

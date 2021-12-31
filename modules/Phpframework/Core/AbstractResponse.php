@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Phpframework\Core;
 
-abstract class AbstractResponse
+abstract class AbstractResponse implements ResponseInterface
 {
     /**
      * @var string

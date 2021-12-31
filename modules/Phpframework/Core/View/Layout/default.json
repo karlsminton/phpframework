@@ -1,0 +1,51 @@
+{
+  "head": {
+    "element": true,
+    "children": [
+      {
+        "title": {
+          "element": true,
+          "value": "Phpframework Example Site"
+        }
+      }
+    ]
+  },
+  "body": {
+    "element": true,
+    "children": [
+      {
+        "header": {
+          "element": true,
+          "children": [{
+            "logo": {
+              "viewmodel": "Phpframework\\Core\\View\\Model\\Logo",
+              "template": "logo.html"
+            },
+            "menu": {
+              "viewmodel": "Phpframework\\Core\\View\\Model\\Menu",
+              "template": "menu.html"
+            }
+          }]
+        },
+        "main": {
+          "element": true,
+          "children": [{
+            "content": {
+              "viewmodel": "Phpframework\\Core\\View\\Model\\Main",
+              "template": "content.html"
+            }
+          }]
+        },
+        "footer": {
+          "element": true,
+          "children": [{
+            "copyright": {
+              "viewmodel": "Phpframework\\Core\\View\\Model\\Copyright",
+              "template": "copyright.html"
+            }
+          }]
+        }
+      }
+    ]
+  }
+}
