@@ -2,12 +2,10 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-define(
-    'PATHS',
-    [
-        'modules' => __DIR__ . '/modules/Phpframework'
-    ]
-);
+const PATHS = [
+    'modules' => __DIR__ . '/modules/Phpframework',
+    'templates' => __DIR__ . '/templates'
+];
 
 $data = array_merge(
     $_SERVER ?? [],

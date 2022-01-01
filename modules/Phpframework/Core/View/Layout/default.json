@@ -19,11 +19,11 @@
           "children": [{
             "logo": {
               "viewmodel": "Phpframework\\Core\\View\\Model\\Logo",
-              "template": "logo.html"
+              "template": "logo.phtml"
             },
             "menu": {
               "viewmodel": "Phpframework\\Core\\View\\Model\\Menu",
-              "template": "menu.html"
+              "template": "menu.phtml"
             }
           }]
         },
@@ -32,7 +32,7 @@
           "children": [{
             "content": {
               "viewmodel": "Phpframework\\Core\\View\\Model\\Main",
-              "template": "content.html"
+              "template": "content.phtml"
             }
           }]
         },
@@ -41,7 +41,7 @@
           "children": [{
             "copyright": {
               "viewmodel": "Phpframework\\Core\\View\\Model\\Copyright",
-              "template": "copyright.html"
+              "template": "copyright.phtml"
             }
           }]
         }

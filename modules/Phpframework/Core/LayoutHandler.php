@@ -128,6 +128,11 @@ class LayoutHandler
                 $html .= "<$name>";
             }
 
+            if (!$toElement) {
+                $nodeRenderer = new \Phpframework\Core\NodeRenderer();
+                $html .= $nodeRenderer->renderNode($datum);
+            }
+
             if (isset($datum['value'])) {
                 $html .= $datum['value'];
             }

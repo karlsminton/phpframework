@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Phpframework\Core\View\Model;
 
-class Menu
+use Phpframework\Core\NodeInterface;
+
+class Menu implements NodeInterface
 {
 
 }
