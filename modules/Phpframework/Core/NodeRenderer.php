@@ -38,14 +38,13 @@ class NodeRenderer
     private function getNode(array $data): NodeInterface
     {
         if (isset($data[self::KEY_NODE])) {
-            $viewmodel = $data[self::KEY_NODE];
+            $node = $data[self::KEY_NODE];
             try {
-                $node = new $viewmodel;
+                return new $node;
             } catch (\Exception $e) {
                 die('Could not instantiate viewmodel.');
             }
         }
-        return $node;
     }
 
     /**
