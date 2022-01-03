@@ -6,18 +6,34 @@ namespace Phpframework\Pages\Controller;
 
 use Phpframework\Core\AbstractController;
 use Phpframework\Core\HtmlResponse;
+use Phpframework\Core\LayoutHandler;
 use Phpframework\Core\ResponseInterface;
 
 class PageActionController extends AbstractController
 {
+    const CONTROLLER = 'something';
+
     /**
-     * @param string $urlkey
-     * @return ResponseInterface
+     * @param LayoutHandler $layoutHandler
+     * @param HtmlResponse $response
      */
-    public function view(string $urlkey): ResponseInterface
+    public function __construct(
+        LayoutHandler $layoutHandler,
+        HtmlResponse $response
+    ) {
+        parent::__construct($layoutHandler);
+        $this->response = $response;
+    }
+
+    /**
+     * @param string $params
+     * @return ResponseInterface
+     * @throws \Exception
+     */
+    public function view(string $params): ResponseInterface
     {
-        $this->layout = 'page_view';
+        $this->layout = 'default';
         $html = $this->getHtml();
-        return new HtmlResponse($html);
+        return $this->response->setContent($html);
     }
 }

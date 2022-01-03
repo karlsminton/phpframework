@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Phpframework\Core;
 
+use DI\Container;
+
 class Application
 {
     /**
@@ -17,16 +19,30 @@ class Application
     private $routerPool;
 
     /**
-     * init Application
+     * @var Container|null
      */
-    public function __construct()
-    {
-        $routers = [
-            new \Phpframework\Pages\Router()
-        ];
+    private $di = null;
 
-        $routerPool = new RouterPool($routers);
+    /**
+     * @param RouterPool $routerPool
+     */
+    public function __construct(
+        RouterPool $routerPool
+    ) {
         $this->routerPool = $routerPool;
+    }
+
+    /**
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     */
+    public function buildRouterPool()
+    {
+        if ($this->di) {
+            $this->routerPool->addRouter([
+                $this->di->get(\Phpframework\Pages\Router::class)
+            ]);
+        }
     }
 
     /**
@@ -45,8 +61,8 @@ class Application
      */
     public function getResponse(): ResponseInterface
     {
-        $route = $this->getRequestString();
-        $router = $this->routerPool->match($route);
+        list($route, $controller, $action, $params) = $this->getRouteControllerAction();
+        $response = $this->routerPool->match($route, $controller, $action, $params);
 
         //todo just for testing
         $layoutHanlder = new LayoutHandler();
@@ -58,10 +74,50 @@ class Application
     }
 
     /**
+     * @param Container $di
+     * @return $this
+     */
+    public function setDiContainer(Container $di)
+    {
+        $this->di = $di;
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    private function getRequestString(): string
+    public function getRequestedUrl(): string
     {
-        return $this->requestData['REQUEST_URI'] ?? '';
+        $protocol = $this->requestData['REQUEST_SCHEME'];
+        $hostname = $this->requestData['HTTP_HOST'];
+        $request = $this->requestData['REQUEST_URI'];
+
+        return sprintf(
+            '%1$s://%2$s%3$s',
+            $protocol,
+            $hostname,
+            $request
+        );
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRouteControllerAction(): array
+    {
+        $parsed = parse_url($this->getRequestedUrl());
+        if (!isset($parsed['path'])) {
+            return ['', '', '', ''];
+        }
+
+        $parts = explode('/', trim($parsed['path'], '/'));
+
+        if (isset($parsed['query'])) {
+            array_push($parts, $parsed['query']);
+        } else {
+            array_push($parts, '');
+        }
+
+        return $parts;
     }
 }

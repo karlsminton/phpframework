@@ -1,6 +1,11 @@
 <?php
 
+use Phpframework\Core\Application;
+
 require __DIR__ . '/vendor/autoload.php';
+
+/** @var \DI\Container $di */
+$di = require __DIR__ . '/bootstrap.php';
 
 const PATHS = [
     'modules' => __DIR__ . '/modules/Phpframework',
@@ -14,7 +19,9 @@ $data = array_merge(
     $_POST ?? []
 );
 
-$app = new \Phpframework\Core\Application();
-$app->setRequestData($data);
+$app = $di->get(Application::class);
+$app->setRequestData($data)
+    ->setDiContainer($di)
+    ->buildRouterPool();
 
 echo $app->getResponse();

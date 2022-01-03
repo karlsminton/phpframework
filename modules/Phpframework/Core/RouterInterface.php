@@ -8,7 +8,15 @@ interface RouterInterface
 {
     /**
      * @param string $route
-     * @return bool
+     * @param string $controller
+     * @param string $action
+     * @param string $params
+     * @return ResponseInterface|null
      */
-    public function match(string $route): bool;
+    public function match(
+        string $route,
+        string $controller,
+        string $action,
+        string $params
+    ): ?ResponseInterface;
 }
