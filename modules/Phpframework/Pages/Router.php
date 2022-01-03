@@ -41,10 +41,9 @@ class Router implements RouterInterface
         string $action,
         string $params = ''
     ): ?ResponseInterface {
-        if (!$route === self::ROUTE) {
+        if ($route !== self::ROUTE) {
             return null;
         }
-
         switch ($controller) {
             case PageActionController::CONTROLLER:
                 return $this->executeAction(
@@ -52,7 +51,9 @@ class Router implements RouterInterface
                     $action,
                     $params
                 );
-
+                
+            default:
+                return null;
         }
     }
 
