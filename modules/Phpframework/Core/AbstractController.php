@@ -36,8 +36,6 @@ abstract class AbstractController
      */
     protected function getHtml(): string
     {
-        $layoutHandler = new LayoutHandler();
-        $layoutHandler->getCombinedLayoutByName($this->layout);
-        return '';
+        return $this->layoutHandler->getCombinedLayoutByName($this->layout);
     }
 }

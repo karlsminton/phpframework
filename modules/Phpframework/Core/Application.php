@@ -63,13 +63,6 @@ class Application
     {
         list($route, $controller, $action, $params) = $this->getRouteControllerAction();
         $response = $this->routerPool->match($route, $controller, $action, $params);
-
-        //todo just for testing
-        $layoutHanlder = new LayoutHandler();
-        $layoutHanlder->getCombinedLayoutByName('default');
-
-        // todo swap for real response
-        $response = new \Phpframework\Core\HtmlResponse('404 Not Found', 404);
         return $response;
     }
 
@@ -117,7 +110,6 @@ class Application
         } else {
             array_push($parts, '');
         }
-
         return $parts;
     }
 }

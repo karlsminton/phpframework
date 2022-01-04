@@ -51,7 +51,7 @@ class Router implements RouterInterface
                     $action,
                     $params
                 );
-                
+
             default:
                 return null;
         }
