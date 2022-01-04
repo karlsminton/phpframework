@@ -31,8 +31,8 @@
           "element": true,
           "children": [{
             "content": {
-              "viewmodel": "Phpframework\\Core\\View\\Model\\Main",
-              "template": "main.phtml"
+              "viewmodel": "Phpframework\\Core\\View\\Model\\NotFound",
+              "template": "notfound.phtml"
             }
           }]
         },

@@ -40,7 +40,8 @@ class Application
     {
         if ($this->di) {
             $this->routerPool->addRouter([
-                $this->di->get(\Phpframework\Pages\Router::class)
+                $this->di->get(\Phpframework\Pages\Router::class),
+                $this->di->get(\Phpframework\Core\NotFoundRouter::class)
             ]);
         }
     }
@@ -99,11 +100,15 @@ class Application
     public function getRouteControllerAction(): array
     {
         $parsed = parse_url($this->getRequestedUrl());
-        if (!isset($parsed['path'])) {
-            return ['', '', '', ''];
-        }
+        $parts = array_values(
+            explode('/', trim($parsed['path'], '/'))
+        );
 
-        $parts = explode('/', trim($parsed['path'], '/'));
+        $count = count($parts);
+        // it's 3 parts as the query is appended afterwards
+        for ($i = 0; $i < (3 - $count); $i++) {
+            $parts[] = '';
+        }
 
         if (isset($parsed['query'])) {
             array_push($parts, $parsed['query']);
