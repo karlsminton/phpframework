@@ -33,13 +33,6 @@ class LayoutHandler
         // this does nothing currently
         $merged = $this->mergeLayouts($data);
         $html = $this->recursiveLayoutRenderer($merged);
-
-//        echo "<pre><code>";
-//        var_dump($html);
-//        echo "</code></pre>";
-//        die();
-        echo $html;
-        die();
         return $html;
     }
 

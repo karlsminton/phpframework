@@ -38,7 +38,8 @@ abstract class AbstractResponse implements ResponseInterface
     }
 
     /**
-     * @return mixed
+     * All response objects should implement this so controllers can just render the response
+     * @return string
      */
-    abstract public function executeAction();
+    abstract public function __toString(): string;
 }

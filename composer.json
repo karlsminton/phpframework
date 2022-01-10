@@ -1,6 +1,7 @@
 {
   "require": {
-    "predis/predis": "*"
+    "predis/predis": "*",
+    "php-di/php-di": "^6.3"
   },
   "autoload": {
     "psr-0": {
@@ -8,6 +9,6 @@
     }
   },
   "require-dev": {
-    "phan/phan": "v2"
+    "phan/phan": "v5"
   }
 }

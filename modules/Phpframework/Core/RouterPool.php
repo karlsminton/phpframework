@@ -22,15 +22,30 @@ class RouterPool
 
     /**
      * @param string $route
-     * @return RouterInterface
+     * @param string $controller
+     * @param string $action
+     * @param string $params
+     * @return ResponseInterface|void|null
      */
-    public function match(string $route)
-    {
+    public function match(
+        string $route,
+        string $controller,
+        string $action,
+        string $params = ''
+    ) {
         /** @var RouterInterface $router */
         foreach ($this->pool as $router) {
-            if ($router->match($route)) {
-                return $router;
+            if ($response = $router->match($route, $controller, $action, $params)) {
+                return $response;
             }
         }
+    }
+
+    /**
+     * @param RouterInterface[] $routers
+     */
+    public function addRouter(array $routers)
+    {
+        $this->pool = array_merge($this->pool, $routers);
     }
 }

@@ -28,6 +28,24 @@ class HtmlResponse extends AbstractResponse
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return $this
+     */
+    public function setContent(string $content)
+    {
+        $this->content = $content;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
     public function executeAction()
     {
         // TODO: Implement executeAction() method.
