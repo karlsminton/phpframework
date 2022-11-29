@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Phpframework\Core;
 
+use DI\Container;
 use Phpframework\Core\NodeInterface;
 
 class NodeRenderer
@@ -11,6 +12,20 @@ class NodeRenderer
     public const KEY_NODE = 'viewmodel';
 
     public const KEY_TEMPLATE = 'template';
+
+    /**
+     * @var Container
+     */
+    private $di;
+
+    /**
+     * @param Container $di
+     */
+    public function __construct(
+        Container $di
+    ) {
+        $this->di = $di;
+    }
 
     /**
      * @param array $data
@@ -38,9 +53,10 @@ class NodeRenderer
     private function getNode(array $data): NodeInterface
     {
         if (isset($data[self::KEY_NODE])) {
-            $node = $data[self::KEY_NODE];
+            $viewModel = $data[self::KEY_NODE];
             try {
-                return new $node;
+                $node = $this->di->get($viewModel);
+                return $node;
             } catch (\Exception $e) {
                 die('Could not instantiate viewmodel.');
             }

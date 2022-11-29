@@ -4,10 +4,32 @@ declare(strict_types=1);
 
 namespace Phpframework\Core;
 
+use Phpframework\Core\Handler\Json;
 use UnexpectedValueException;
 
 class LayoutHandler
 {
+    /**
+     * @var Json
+     */
+    private $jsonHandler;
+
+    /**
+     * @var NodeRenderer
+     */
+    private $nodeRenderer;
+
+    /**
+     * @param Json $jsonHandler
+     * @param NodeRenderer $nodeRenderer
+     */
+    public function __construct(
+        Json $jsonHandler,
+        NodeRenderer $nodeRenderer
+    ) {
+        $this->jsonHandler = $jsonHandler;
+        $this->nodeRenderer = $nodeRenderer;
+    }
     /**
      * @param string $name
      * @return string
@@ -16,13 +38,12 @@ class LayoutHandler
     public function getCombinedLayoutByName(string $name): string
     {
         $layouts = $this->getLayoutsByName($name);
-        $jsonHandler = new \Phpframework\Core\Handler\Json();
 
         $data = [];
         foreach ($layouts as $path => $layout) {
             $contents = file_get_contents($layout);
             try {
-                $data[$path] = $jsonHandler->jsonToData($contents);
+                $data[$path] = $this->jsonHandler->jsonToData($contents);
             } catch (\JsonException $e) {
                 $msg = sprintf('Unable to decode layout at path %$1s', $path);
                 throw new \Exception($msg);
@@ -96,6 +117,7 @@ class LayoutHandler
     /**
      * @param array $data
      * @return string
+     * @throws \Exception
      */
     private function recursiveLayoutRenderer(array $data): string
     {
@@ -122,8 +144,7 @@ class LayoutHandler
             }
 
             if (!$toElement) {
-                $nodeRenderer = new \Phpframework\Core\NodeRenderer();
-                $html .= $nodeRenderer->renderNode($datum);
+                $html .= $this->nodeRenderer->renderNode($datum);
             }
 
             if (isset($datum['value'])) {
